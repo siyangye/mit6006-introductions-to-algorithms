@@ -57,6 +57,7 @@ class Doubly_Linked_List_Seq:
 
 
     def delete_first(self):
+        x = self.head
         if self.head is None:
             return
         elif self.head == self.tail:
@@ -65,10 +66,11 @@ class Doubly_Linked_List_Seq:
         else:
             self.head = self.head.next
             self.head.prev = None
-        return self
+        return x.item
 
 
     def delete_last(self):
+        x = self.tail
         if self.head is None:
             return
         elif self.head == self.tail:
@@ -77,7 +79,7 @@ class Doubly_Linked_List_Seq:
         else:
             self.tail = self.tail.prev
             self.tail.next = None
-        return self
+        return x.item
 
     def remove(self, x1, x2):
         L2 = Doubly_Linked_List_Seq()
@@ -100,28 +102,23 @@ class Doubly_Linked_List_Seq:
         #detach L2 from L1:
         x1.prev = None 
         x2.next = None
-        return self
+        return L2 #return new ll
 
     def splice(self, x, L2):
         if L2.head is None:
             return
-        if self.head is None:
-            if L2 is None:
-                return None
-            else:
-                self.head = L2.head
-                self.tail = L2.tail
-                L2.head = None
-                L2.tail = None
-                return
+        elif self.head is None: #but L2 is not none.
+            self.head = L2.head
+            self.tail = L2.tail
+            L2.head = None
+            L2.tail = None
+            return
        
-        else:
+        else: #L, l2 both not none
             y1= L2.head
             y2 = L2.tail
-            xn = x.next
+            xn = x.next 
             x.next = y1
-            print(f"Splicing after node with item {x.item}")
-            print(f"L2 head item: {y1.item}, L2 tail item: {y2.item}")
             y1.prev = x
             if x == self.tail:
                 self.tail = y2
